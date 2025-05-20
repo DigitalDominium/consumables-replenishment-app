@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: consumables-backend
+    env: node
+    repo: https://github.com/yourusername/consumables-replenishment-app
+    buildCommand: cd server && npm install
+    startCommand: cd server && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_USER
+        fromDatabase:
+          name: consumables-db
+          property: user
+      - key: DB_HOST
+        fromDatabase:
+          name: consumables-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: consumables-db
+          property: database
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: consumables-db
+          property: password
+      - key: DB_PORT
+        fromDatabase:
+          name: consumables-db
+          property: port
+  - type: web
+    name: consumables-frontend
+    env: static
+    repo: https://github.com/yourusername/consumables-replenishment-app
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/build
+databases:
+  - name: consumables-db
+    databaseName: consumables_db
+    user: consumables_user
