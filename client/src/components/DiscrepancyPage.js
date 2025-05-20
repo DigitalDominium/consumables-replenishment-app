@@ -13,7 +13,7 @@ function DiscrepancyPage({ userId, setPage }) {
       alert('Please select at least one discrepancy');
       return;
     }
-    await fetch('/api/submit-discrepancy', {
+    await fetch('https://consumables-replenishment-app.onrender.com/api/submit-discrepancy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, discrepancies: selectedDiscrepancies, timestamp: new Date().toISOString() })
