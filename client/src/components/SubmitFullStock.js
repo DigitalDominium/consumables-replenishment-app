@@ -2,7 +2,7 @@ import React from 'react';
 
 function SubmitFullStock({ userId, setPage }) {
   const handleSubmit = async () => {
-    await fetch('/api/submit-full', {
+    await fetch('https://consumables-replenishment-app.onrender.com/api/submit-full', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, timestamp: new Date().toISOString() })
