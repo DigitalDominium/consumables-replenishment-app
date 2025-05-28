@@ -13,7 +13,7 @@ function DiscrepancyPage({ userId, setPage }) {
       alert('Please select at least one discrepancy');
       return;
     }
-    await fetch('https://consumables-replenishment-app.onrender.com/api/submit-discrepancy', {
+    await fetch('https://consumables-backend-xyz.onrender.com/api/submit-discrepancy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, discrepancies: selectedDiscrepancies, timestamp: new Date().toISOString() })
@@ -35,34 +35,38 @@ function DiscrepancyPage({ userId, setPage }) {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold mb-4">Submit Discrepancies</h1>
-      <div className="grid grid-cols-2 gap-4 max-w-2xl">
-        {consumablesList.map(item => (
-          <label key={item} className="flex items-center">
-            <input
-              type="checkbox"
-              checked={discrepancies[item] || false}
-              onChange={() => handleCheckboxChange(item)}
-              className="mr-2"
-            />
-            {item}
-          </label>
-        ))}
-      </div>
-      <div className="mt-4">
-        <button
-          onClick={handleSubmit}
-          className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600"
-        >
-          Submit Discrepancies
-        </button>
-        <button
-          onClick={() => setPage('main')}
-          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        >
-          Back
-        </button>
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl w-full transform transition-all hover:scale-105">
+        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Submit Discrepancies</h1>
+        <div className="max-h-96 overflow-y-auto mb-6">
+          <div className="grid grid-cols-2 gap-4">
+            {consumablesList.map(item => (
+              <label key={item} className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 p-2 rounded-lg transition">
+                <input
+                  type="checkbox"
+                  checked={discrepancies[item] || false}
+                  onChange={() => handleCheckboxChange(item)}
+                  className="h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500"
+                />
+                <span>{item}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="flex space-x-4">
+          <button
+            onClick={handleSubmit}
+            className="flex-1 bg-red-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-red-700 hover:shadow-lg transition duration-300 transform hover:-translate-y-1"
+          >
+            Submit Discrepancies
+          </button>
+          <button
+            onClick={() => setPage('main')}
+            className="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-gray-700 hover:shadow-lg transition duration-300 transform hover:-translate-y-1"
+          >
+            Back
+          </button>
+        </div>
       </div>
     </div>
   );
