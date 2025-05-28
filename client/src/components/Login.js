@@ -42,12 +42,17 @@ function QRScanner({ onScan }) {
   return <video ref={videoRef} className="w-full max-w-md mx-auto"></video>;
 }
 
-function Login({ setUserId }) {
+function Login({ setUserId, validUserIds }) {
   const [scanning, setScanning] = useState(false);
 
   const handleScan = (userId) => {
     setScanning(false);
-    setUserId(userId);
+    // Validate the scanned user ID
+    if (validUserIds.includes(userId) || userId === 'supervisor') {
+      setUserId(userId);
+    } else {
+      alert('Invalid user ID. Access denied.');
+    }
   };
 
   return (
