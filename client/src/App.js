@@ -30,7 +30,7 @@ function App() {
   const [page, setPage] = useState('main');
 
   if (!userId) {
-    return <Login setUserId={setUserId} />;
+    return <Login setUserId={setUserId} validUserIds={validUserIds} />;
   }
 
   if (userId === 'supervisor') {
