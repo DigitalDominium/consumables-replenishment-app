@@ -39,7 +39,7 @@ function QRScanner({ onScan }) {
     };
   }, []);
 
-  return <video ref={videoRef} className="w-full max-w-md mx-auto"></video>;
+  return <video ref={videoRef} className="w-full max-w-md mx-auto rounded-lg shadow-lg"></video>;
 }
 
 function Login({ setUserId, validUserIds }) {
@@ -47,7 +47,6 @@ function Login({ setUserId, validUserIds }) {
 
   const handleScan = (userId) => {
     setScanning(false);
-    // Validate the scanned user ID
     if (validUserIds.includes(userId) || userId === 'supervisor') {
       setUserId(userId);
     } else {
@@ -56,18 +55,20 @@ function Login({ setUserId, validUserIds }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Consumables Replenishment</h1>
-      {!scanning ? (
-        <button
-          onClick={() => setScanning(true)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Scan QR Code
-        </button>
-      ) : (
-        <QRScanner onScan={handleScan} />
-      )}
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full transform transition-all hover:scale-105">
+        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Consumables Replenishment</h1>
+        {!scanning ? (
+          <button
+            onClick={() => setScanning(true)}
+            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-indigo-700 hover:shadow-lg transition duration-300 transform hover:-translate-y-1"
+          >
+            Scan QR Code
+          </button>
+        ) : (
+          <QRScanner onScan={handleScan} />
+        )}
+      </div>
     </div>
   );
 }
