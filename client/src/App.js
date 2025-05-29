@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LoginPage from './components/LoginPage';
+import LoginPage from './components/Login';
 import MainPage from './components/MainPage';
 import SubmitFullStock from './components/SubmitFullStock';
 import DiscrepancyPage from './components/DiscrepancyPage';
