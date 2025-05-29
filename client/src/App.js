@@ -22,24 +22,43 @@ function App() {
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
+      console.log('Found stored userId:', storedUserId);
       if (validUserIds.includes(storedUserId) || storedUserId === 'supervisor') {
         setUserId(storedUserId);
         setPage(storedUserId === 'supervisor' ? 'supervisor' : 'main');
+        console.log('Navigating to page:', storedUserId === 'supervisor' ? 'supervisor' : 'main');
+      } else {
+        console.log('Stored userId is invalid:', storedUserId);
       }
     }
   }, []);
 
+  useEffect(() => {
+    console.log('userId updated:', userId);
+  }, [userId]);
+
+  useEffect(() => {
+    console.log('page updated:', page);
+  }, [page]);
+
   const handleLogin = (scannedUserId) => {
-    if (validUserIds.includes(scannedUserId) || scannedUserId === 'supervisor') {
-      setUserId(scannedUserId);
-      localStorage.setItem('userId', scannedUserId);
-      setPage(scannedUserId === 'supervisor' ? 'supervisor' : 'main');
+    const trimmedUserId = scannedUserId.trim();
+    console.log('handleLogin called with scannedUserId:', trimmedUserId);
+    if (validUserIds.includes(trimmedUserId) || trimmedUserId === 'supervisor') {
+      console.log('User ID is valid:', trimmedUserId);
+      setUserId(trimmedUserId);
+      localStorage.setItem('userId', trimmedUserId);
+      const newPage = trimmedUserId === 'supervisor' ? 'supervisor' : 'main';
+      setPage(newPage);
+      console.log('Navigating to page:', newPage);
     } else {
+      console.log('Invalid user ID:', trimmedUserId);
       alert('Invalid user ID');
     }
   };
 
   const renderPage = () => {
+    console.log('Rendering page:', page);
     switch (page) {
       case 'login':
         return <Login onLogin={handleLogin} />;
