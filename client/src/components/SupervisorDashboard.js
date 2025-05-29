@@ -4,7 +4,7 @@ function SupervisorDashboard() {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    fetch('https://consumables-backend-xyz.onrender.com/api/logs')
+    fetch('https://consumables-replenishment-app.onrender.com/api/logs')
       .then(res => res.json())
       .then(data => setLogs(data))
       .catch(err => console.error('Error fetching logs:', err));
