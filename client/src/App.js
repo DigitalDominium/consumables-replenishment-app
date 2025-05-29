@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LoginPage from './components/Login';
+import Login from './components/Login';
 import MainPage from './components/MainPage';
 import SubmitFullStock from './components/SubmitFullStock';
 import DiscrepancyPage from './components/DiscrepancyPage';
@@ -42,7 +42,7 @@ function App() {
   const renderPage = () => {
     switch (page) {
       case 'login':
-        return <LoginPage onLogin={handleLogin} />;
+        return <Login onLogin={handleLogin} />;
       case 'main':
         return <MainPage userId={userId} setPage={setPage} />;
       case 'submitFull':
@@ -54,7 +54,7 @@ function App() {
       case 'checklist':
         return <ReachTruckChecklist userId={userId} setPage={setPage} />;
       default:
-        return <LoginPage onLogin={handleLogin} />;
+        return <Login onLogin={handleLogin} />;
     }
   };
 
