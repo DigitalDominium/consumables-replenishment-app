@@ -5,13 +5,17 @@ function QRScanner({ onScan }) {
   const canvasRef = useRef(document.createElement('canvas'));
 
   useEffect(() => {
+    console.log('Requesting camera access...');
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
       .then(stream => {
+        console.log('Camera access granted, setting video stream...');
         videoRef.current.srcObject = stream;
         videoRef.current.play();
         scanQR();
       })
-      .catch(err => console.error('Camera access denied:', err));
+      .catch(err => {
+        console.error('Camera access denied:', err);
+      });
 
     function scanQR() {
       const video = videoRef.current;
@@ -25,19 +29,25 @@ function QRScanner({ onScan }) {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const code = window.jsQR(imageData.data, imageData.width, imageData.height);
         if (code && code.data) {
+          console.log('QR code detected:', code.data);
           onScan(code.data);
           video.srcObject.getTracks().forEach(track => track.stop());
+        } else {
+          console.log('No QR code detected in this frame');
         }
+      } else {
+        console.log('Video not ready, state:', video.readyState);
       }
       requestAnimationFrame(scanQR);
     }
 
     return () => {
+      console.log('Cleaning up video stream...');
       if (videoRef.current && videoRef.current.srcObject) {
         videoRef.current.srcObject.getTracks().forEach(track => track.stop());
       }
     };
-  }, []);
+  }, [onScan]);
 
   return <video ref={videoRef} className="w-full max-w-md mx-auto rounded-lg shadow-lg"></video>;
 }
@@ -46,10 +56,13 @@ function Login({ setUserId, validUserIds }) {
   const [scanning, setScanning] = useState(false);
 
   const handleScan = (userId) => {
+    console.log('handleScan called with userId:', userId);
     setScanning(false);
     if (validUserIds.includes(userId) || userId === 'supervisor') {
+      console.log('User ID is valid:', userId);
       setUserId(userId);
     } else {
+      console.log('Invalid user ID:', userId);
       alert('Invalid user ID. Access denied.');
     }
   };
